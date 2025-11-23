@@ -11,7 +11,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar,
   SidebarFooter,
 } from '@/components/ui/sidebar';
@@ -25,21 +24,18 @@ const menuItems = [
 ];
 
 export function AppSidebar() {
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
   const { profile, signOut } = useAuth();
   const currentPath = location.pathname;
 
-  const isActive = (path: string) => currentPath === path;
+  const isCollapsed = state === 'collapsed';
 
   return (
-    <Sidebar
-      className={collapsed ? 'w-14' : 'w-60'}
-      collapsible
-    >
+    <Sidebar collapsible="icon">
       <div className="flex items-center gap-3 p-4 border-b border-sidebar-border">
-        <img src={logo} alt="Sofia Logo" className={`h-8 ${collapsed ? 'mx-auto' : ''}`} />
-        {!collapsed && (
+        <img src={logo} alt="Sofia Logo" className={`h-8 ${isCollapsed ? 'mx-auto' : ''}`} />
+        {!isCollapsed && (
           <div className="flex flex-col">
             <span className="text-sidebar-foreground font-semibold text-sm">
               Gestão Municipal
@@ -50,7 +46,7 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          {!collapsed && (
+          {!isCollapsed && (
             <SidebarGroupLabel className="text-sidebar-foreground/70">
               Menu
             </SidebarGroupLabel>
@@ -68,7 +64,7 @@ export function AppSidebar() {
                       activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
                     >
                       <item.icon className="h-4 w-4" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {!isCollapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -80,7 +76,7 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-sidebar-border">
         <div className="p-4 space-y-2">
-          {!collapsed && profile && (
+          {!isCollapsed && profile && (
             <div className="text-xs text-sidebar-foreground/70 space-y-1 mb-3">
               <div className="flex items-center gap-2">
                 <User className="h-3 w-3" />
@@ -100,7 +96,7 @@ export function AppSidebar() {
             className="w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-primary"
           >
             <LogOut className="h-4 w-4" />
-            {!collapsed && <span className="ml-2">Sair</span>}
+            {!isCollapsed && <span className="ml-2">Sair</span>}
           </Button>
         </div>
       </SidebarFooter>

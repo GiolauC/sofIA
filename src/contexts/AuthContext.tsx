@@ -52,7 +52,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return null;
     }
 
-    return data;
+    if (!data) return null;
+
+    return {
+      ...data,
+      role: data.role as UserRole
+    } as UserProfile;
   };
 
   useEffect(() => {
