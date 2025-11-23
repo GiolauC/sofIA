@@ -1,15 +1,58 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Star } from 'lucide-react';
+import { Star, TrendingUp, Building2, Users, Target } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 
 const categories = [
-  { name: 'Segurança', rating: 4.2, reviews: 234 },
-  { name: 'Mobilidade', rating: 3.8, reviews: 189 },
-  { name: 'Saúde', rating: 4.5, reviews: 312 },
-  { name: 'Educação', rating: 4.7, reviews: 267 },
-  { name: 'Infraestrutura', rating: 3.5, reviews: 198 },
-  { name: 'Limpeza', rating: 4.1, reviews: 245 },
+  { 
+    name: 'Segurança', 
+    rating: 4.2, 
+    reviews: 234, 
+    trend: '+0.3',
+    businessImpact: 'Alto',
+    opportunities: ['Sistemas de segurança', 'Monitoramento', 'Iluminação']
+  },
+  { 
+    name: 'Mobilidade', 
+    rating: 3.8, 
+    reviews: 189, 
+    trend: '-0.1',
+    businessImpact: 'Médio',
+    opportunities: ['Transporte público', 'Aplicativos', 'Bicicletas']
+  },
+  { 
+    name: 'Saúde', 
+    rating: 4.5, 
+    reviews: 312, 
+    trend: '+0.2',
+    businessImpact: 'Alto',
+    opportunities: ['Telemedicina', 'Equipamentos', 'Farmacêuticas']
+  },
+  { 
+    name: 'Educação', 
+    rating: 4.7, 
+    reviews: 267, 
+    trend: '+0.4',
+    businessImpact: 'Médio',
+    opportunities: ['Tecnologia educacional', 'Cursos', 'Material didático']
+  },
+  { 
+    name: 'Infraestrutura', 
+    rating: 3.5, 
+    reviews: 198, 
+    trend: '+0.1',
+    businessImpact: 'Alto',
+    opportunities: ['Construção civil', 'Engenharia', 'Materiais']
+  },
+  { 
+    name: 'Limpeza', 
+    rating: 4.1, 
+    reviews: 245, 
+    trend: '+0.2',
+    businessImpact: 'Baixo',
+    opportunities: ['Equipamentos', 'Produtos', 'Serviços']
+  },
 ];
 
 const recentComments = [
@@ -51,18 +94,15 @@ export default function Evaluations() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="md:col-span-1">
-          <CardHeader>
-            <CardTitle>Nota Geral</CardTitle>
-          </CardHeader>
-          <CardContent className="text-center space-y-4">
-            <div className="text-6xl font-bold text-primary">{overallRating}</div>
-            <div className="flex justify-center gap-1">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <Card>
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-primary mb-2">{overallRating}</div>
+            <div className="flex justify-center gap-1 mb-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  className={`h-6 w-6 ${
+                  className={`h-4 w-4 ${
                     star <= Math.round(parseFloat(overallRating))
                       ? 'fill-warning text-warning'
                       : 'text-muted'
@@ -70,13 +110,89 @@ export default function Evaluations() {
                 />
               ))}
             </div>
-            <p className="text-sm text-muted-foreground">{totalReviews} avaliações</p>
+            <p className="text-sm text-muted-foreground">Satisfação Geral</p>
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2">
+        <Card>
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-green-600 mb-2">{totalReviews}</div>
+            <div className="flex items-center justify-center gap-1 mb-2">
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground">Avaliações Totais</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-blue-600 mb-2">67%</div>
+            <div className="flex items-center justify-center gap-1 mb-2">
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground">Tendência Positiva</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-purple-600 mb-2">18</div>
+            <div className="flex items-center justify-center gap-1 mb-2">
+              <Target className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground">Oportunidades</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
           <CardHeader>
-            <CardTitle>Avaliação por Categoria</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Building2 className="h-5 w-5" />
+              Oportunidades de Negócio
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {categories
+                .sort((a, b) => parseFloat(b.trend.replace('+', '')) - parseFloat(a.trend.replace('+', '')))
+                .slice(0, 3)
+                .map((category) => (
+                <div key={category.name} className="p-4 border rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium">{category.name}</h4>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-sm px-2 py-1 rounded ${
+                        category.trend.startsWith('+') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                      }`}>
+                        {category.trend}
+                      </span>
+                      <span className={`text-xs px-2 py-1 rounded ${
+                        category.businessImpact === 'Alto' ? 'bg-red-100 text-red-700' :
+                        category.businessImpact === 'Médio' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-gray-100 text-gray-700'
+                      }`}>
+                        {category.businessImpact}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {category.opportunities.map((opp, idx) => (
+                      <span key={idx} className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded">
+                        {opp}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Performance por Categoria</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -84,13 +200,17 @@ export default function Evaluations() {
                 <div key={category.name} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <span className="font-medium text-foreground w-32">{category.name}</span>
+                      <span className="font-medium text-foreground w-24">{category.name}</span>
                       <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-warning text-warning" />
-                        <span className="font-semibold text-foreground">{category.rating}</span>
+                        <Star className="h-3 w-3 fill-warning text-warning" />
+                        <span className="text-sm font-semibold">{category.rating}</span>
                       </div>
                     </div>
-                    <span className="text-sm text-muted-foreground">{category.reviews} avaliações</span>
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      category.trend.startsWith('+') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                    }`}>
+                      {category.trend}
+                    </span>
                   </div>
                   <Progress value={(category.rating / 5) * 100} className="h-2" />
                 </div>
@@ -102,24 +222,24 @@ export default function Evaluations() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Comentários Recentes</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Insights Recentes</CardTitle>
+            <Button variant="outline" size="sm">
+              Ver Relatório Completo
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {recentComments.map((comment, index) => (
-              <div key={index} className="p-4 rounded-lg border border-border space-y-2">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="font-medium text-foreground">{comment.author}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(comment.date).toLocaleDateString('pt-BR')} • {comment.category}
-                    </p>
-                  </div>
+              <div key={index} className="p-4 rounded-lg border space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-primary">{comment.category}</span>
                   <div className="flex gap-0.5">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star
                         key={star}
-                        className={`h-4 w-4 ${
+                        className={`h-3 w-3 ${
                           star <= comment.rating
                             ? 'fill-warning text-warning'
                             : 'text-muted'
@@ -129,6 +249,9 @@ export default function Evaluations() {
                   </div>
                 </div>
                 <p className="text-sm text-foreground">{comment.comment}</p>
+                <div className="text-xs text-muted-foreground">
+                  {new Date(comment.date).toLocaleDateString('pt-BR')}
+                </div>
               </div>
             ))}
           </div>

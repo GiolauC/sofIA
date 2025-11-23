@@ -71,20 +71,76 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-4 text-center">
-          <div className="flex justify-center">
-            <img src={logo} alt="Sofia Logo" className="h-16" />
+    <div className="min-h-screen flex bg-gray-100">
+      {/* Lado Esquerdo - Imagem e Texto Explicativo */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-cover bg-center bg-no-repeat" style={{backgroundImage: 'url("/background.jpg")'}}>
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 flex flex-col justify-center px-12 text-white">
+          <div className="mb-8">
+            <img src={logo} alt="Sofia Logo" className="h-20 mb-1" />
+            <p className="text-lg tracking-wide mb-8 opacity-90">
+            Gestão eficiente nasce da participação.
+            </p>
           </div>
-          <div>
-            <CardTitle className="text-2xl font-bold text-foreground">Gestão Municipal</CardTitle>
-            <CardDescription>Acesse o sistema de gestão da sua cidade</CardDescription>
+          
+          <div className="space-y-6">
+            <div className="flex items-start space-x-4">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{backgroundColor: '#C5D201'}}>
+                <span className="text-sm font-bold" style={{color: '#342055'}}>1</span>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Monitoramento em Tempo Real</h3>
+                <p className="text-sm opacity-80">
+                  Acompanhe indicadores de qualidade de vida, demandas dos cidadãos e performance dos serviços públicos
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-4">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{backgroundColor: '#C5D201'}}>
+                <span className="text-sm font-bold" style={{color: '#342055'}}>2</span>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Gestão Inteligente</h3>
+                <p className="text-sm opacity-80">
+                  Tome decisões baseadas em dados concretos e melhore a eficiência da administração pública
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-4">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1" style={{backgroundColor: '#C5D201'}}>
+                <span className="text-sm font-bold" style={{color: '#342055'}}>3</span>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Transparência e Participação</h3>
+                <p className="text-sm opacity-80">
+                  Promova maior transparência e engajamento dos cidadãos na gestão municipal
+                </p>
+              </div>
+            </div>
           </div>
-        </CardHeader>
-        <CardContent>
+        </div>
+        
+        {/* Elementos decorativos */}
+        <div className="absolute top-20 right-20 w-32 h-32 bg-white/10 rounded-full" />
+        <div className="absolute bottom-20 left-20 w-24 h-24 bg-white/10 rounded-full" />
+        <div className="absolute top-1/2 right-10 w-16 h-16 bg-white/10 rounded-full" />
+      </div>
+
+      {/* Lado Direito - Formulário */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+        <div className=" rounded-3xl p-8 w-full max-w-md ">
+          <div className="text-center mb-8">
+            <div className="lg:hidden mb-6">
+              <img src={logo} alt="Sofia Logo" className="h-16 mx-auto" />
+            </div>
+            <h2 className="text-3xl font-bold text-foreground mb-2">Bem-vindo</h2>
+            <p className="text-muted-foreground">Acesse sua conta para continuar</p>
+          </div>
+
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="signin">Entrar</TabsTrigger>
               <TabsTrigger value="signup">Criar Conta</TabsTrigger>
             </TabsList>
@@ -190,8 +246,8 @@ export default function Auth() {
               </form>
             </TabsContent>
           </Tabs>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

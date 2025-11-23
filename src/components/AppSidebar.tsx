@@ -32,8 +32,8 @@ export function AppSidebar() {
   const isCollapsed = state === 'collapsed';
 
   return (
-    <Sidebar collapsible="icon">
-      <div className="flex items-center gap-3 p-4 border-b border-sidebar-border">
+    <Sidebar collapsible="icon" className="rounded-r-2xl overflow-hidden">
+      <div className="flex items-center gap-3 p-4 border-b border-sidebar-border bg-sidebar">
         <img src={logo} alt="Sofia Logo" className={`h-8 ${isCollapsed ? 'mx-auto' : ''}`} />
         {!isCollapsed && (
           <div className="flex flex-col">
