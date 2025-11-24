@@ -1,73 +1,177 @@
-# Welcome to your Lovable project
+# City Pulse Dashboard
 
-## Project info
+Dashboard municipal para gestão de demandas dos cidadãos via WhatsApp, análise de métricas e consultas governamentais com IA.
 
-**URL**: https://lovable.dev/projects/96674e3d-7f60-4fe4-9bd4-082f403f6904
+##  Arquitetura do Sistema
 
-## How can I edit this code?
+```
+┌─────────────────┐    HTTP/REST    ┌─────────────────┐
+│   Frontend      │ ──────────────► │   Backend       │
+│   (React/Vite)  │                 │   (Spring Boot) │
+│   Port: 5173    │                 │   Port: 8080    │
+└─────────────────┘                 └─────────────────┘
+                                            │
+                                            ▼
+                                    ┌─────────────────┐
+                                    │   Database      │
+                                    │   (H2/PostgreSQL)│
+                                    └─────────────────┘
+```
 
-There are several ways of editing your application.
+##  Como executar o projeto
 
-**Use Lovable**
+### Pré-requisitos
+- Node.js 18+ 
+- Java 17+
+- npm ou yarn
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/96674e3d-7f60-4fe4-9bd4-082f403f6904) and start prompting.
+### 1. Executar o Backend (Spring Boot)
 
-Changes made via Lovable will be committed automatically to this repo.
+```bash
+# Navegar para o diretório do backend
+cd c:\Users\Giovanna\IdeaProjects\Sofia\sofia
 
-**Use your preferred IDE**
+# Executar o backend
+.\mvnw.cmd spring-boot:run
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+O backend estará disponível em: `http://localhost:8080`
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Endpoints principais:**
+- Health Check: `GET /actuator/health`
+- Métricas: `GET /metrics/dashboard`
+- H2 Console: `http://localhost:8080/h2-console`
 
-Follow these steps:
+### 2. Executar o Frontend (React/Vite)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+# Navegar para o diretório do frontend
+cd "C:\Users\{user}\OneDrive\Área de Trabalho\city-pulse-dashboard"
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Instalar dependências
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Executar o frontend
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+O frontend estará disponível em: `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. Scripts Automatizados
 
-**Use GitHub Codespaces**
+```bash
+# Testar integração completa
+test-integration.bat
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Deploy completo (frontend + backend)
+deploy-full-stack.bat
+```
 
-## What technologies are used for this project?
+## Tecnologias Utilizadas
 
-This project is built with:
+### Frontend
+- **React 18** - Biblioteca para interfaces
+- **TypeScript** - Tipagem estática
+- **Vite** - Build tool e dev server
+- **Tailwind CSS** - Framework CSS utilitário
+- **shadcn/ui** - Componentes UI
+- **React Router** - Roteamento
+- **Recharts** - Gráficos e visualizações
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Backend
+- **Spring Boot 3.4** - Framework Java
+- **Spring Security** - Autenticação e autorização
+- **Spring Data JPA** - Persistência de dados
+- **H2 Database** - Banco em memória (desenvolvimento)
+- **PostgreSQL** - Banco de produção
+- **Flyway** - Migração de banco
 
-## How can I deploy this project?
+## Funcionalidades
 
-Simply open [Lovable](https://lovable.dev/projects/96674e3d-7f60-4fe4-9bd4-082f403f6904) and click on Share -> Publish.
+### Dashboard Principal
+- Métricas em tempo real
+- Visualização de interações por localização
+- Análise demográfica por faixa etária
+- Indicadores de performance municipal
 
-## Can I connect a custom domain to my Lovable project?
+### Gestão de Demandas
+- Interações via WhatsApp
+- Mapa de ocorrências
+- Upload e visualização de fotos
+- Categorização automática
 
-Yes, you can!
+### Consultas Governamentais
+- Chat com IA Sofia
+- Esclarecimentos sobre leis municipais
+- Análise de regulamentações
+- Suporte a decisões administrativas
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Métricas e Analytics
+- Questões urgentes identificadas por IA
+- Análise de tendências temporais
+- Métricas de engajamento cidadão
+- Relatórios exportáveis
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+##  Configuração
+
+### Variáveis de Ambiente (Frontend)
+
+```env
+# .env.local
+VITE_API_URL=http://localhost:8080
+VITE_APP_NAME=City Pulse Dashboard
+```
+
+### Configuração do Backend
+
+```properties
+# application.properties
+spring.datasource.url=jdbc:h2:mem:sofia_db
+spring.h2.console.enabled=true
+server.port=8080
+```
+
+## Deploy em Produção
+
+Consulte o arquivo `DEPLOY.md` para instruções completas de deploy.
+
+**Plataformas recomendadas:**
+- Frontend: Vercel, Netlify
+- Backend: Railway, Render, Heroku
+- Banco: Supabase, PlanetScale
+
+## Testes
+
+```bash
+# Frontend
+npm run test
+
+# Backend
+.\mvnw.cmd test
+
+# Integração completa
+test-integration.bat
+```
+
+## Estrutura do Projeto
+
+```
+city-pulse-dashboard/
+├── src/
+│   ├── components/     # Componentes React
+│   ├── pages/         # Páginas da aplicação
+│   ├── hooks/         # Custom hooks
+│   ├── services/      # Serviços de API
+│   ├── contexts/      # Contextos React
+│   └── lib/          # Utilitários
+├── public/           # Assets estáticos
+└── dist/            # Build de produção
+```
+
+## Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
